@@ -17,6 +17,10 @@ byte* DueFlashStorage::readAddress(uint32_t address) {
   return FLASH_START+address;
 }
 
+uint32_t DueFlashStorage::getOffset(byte* address) {
+	return address - FLASH_START;
+}
+
 extern "C" unsigned char _etext;
 extern "C" unsigned char _srelocate;
 extern "C" unsigned char _erelocate;
@@ -174,3 +178,8 @@ boolean DueFlashStorage::write_unlocked(uint32_t address, byte *data, uint32_t d
   return true;
 }
 
+boolean DueFlashStorage::write(byte* address, byte *data, uint32_t dataLength)
+{
+	uint32_t offset = getOffset(address);
+	return write(offset, data, dataLength);
+}
