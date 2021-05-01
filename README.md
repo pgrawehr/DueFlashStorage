@@ -12,22 +12,20 @@ Note: The flash storage is reset every time you upload a new sketch to your Ardu
 Inspiration and some code from Pansenti at https://github.com/Pansenti/DueFlash
 
 ## Install
-Arduino.cc has some good instructions on how to add libraries:
-https://www.arduino.cc/en/Guide/Libraries
+To install this (forked) version of the library, checkout the repository from https://github.com/pgrawehr/DueFlashStorage to "C:\Users\<your name>\Documents\Arduino\libraries\DueFlashStorage"
 
-The easiest is just to open the library manager and search for "DueFlashStorage". Install the one from Sebastian Nilsson.
-
-Remember that you also need to install the Arduino SAM Boards from the board manager:
-https://www.arduino.cc/en/Guide/Cores
+## Changes to the original implementation:
+- The whole flash space can be addressed. Flash offset 0 is now the start of the first flash block, where the application resides. Therefore one must be **extra careful** not to overwrite the program in memory. Use the new `getFirstFreeBlock` function to retrieve the first block not used by the program. 
+- Added a new overload to write: `boolean write(byte* addres, byte* data, uin32_t dataLength)` that allows writing to addresses instead of offsets. 
 
 ## Use
 ### Basic use
 ```cpp
-// write the value 123 to address 0
-dueFlashStorage.write(0,123);
+// write the value 123 to offset 0x2000
+dueFlashStorage.write(0x2000,123);
 
-// read byte at address 0
-byte b = dueFlashStorage.read(0);
+// read byte at offset 0
+byte b = dueFlashStorage.read(0x2000);
 ```
 
 ### Advanced use to store configuration parameters
