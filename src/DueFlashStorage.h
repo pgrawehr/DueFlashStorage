@@ -55,6 +55,11 @@ public:
 	// then crash the CPU. 
 	byte* getFirstFreeBlock();
 	
+	uint32_t getFlashSize() 
+	{
+		return IFLASH0_SIZE + IFLASH1_SIZE;
+	}
+	
 	// These write methods write a byte or a block to the given offset. 
 	boolean write(uint32_t address, byte value);
 	boolean write(uint32_t address, byte *data, uint32_t dataLength);
