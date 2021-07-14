@@ -68,7 +68,10 @@ public:
 	
 	// This writes directly to the given address. It must be in flash. 
 	boolean write(byte* address, byte *data, uint32_t dataLength);
-	
+	void eraseBlock(uint32_t address, uint32_t dataLength)
+	{
+		// No op - not necessary here
+	}
 };
 
 #endif
